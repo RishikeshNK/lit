@@ -1,6 +1,7 @@
 import click
 import os
 from lit.constants import REPO_NAME
+from lit.models.workspace import Workspace
 
 
 @click.group()
@@ -25,8 +26,17 @@ def init(path: str) -> None:
             os.makedirs(dir_path, exist_ok=True)
 
         click.echo(f"Initialized empty Lit repository in {repo_path}")
-    except OSError as e:
-        click.echo(f"{repo_path}: {e.strerror}")
+    except OSError as e: 
+        click.echo(f"{repo_path}: {e.strerror}", err=True)
+
+@cli.command("commit")
+def commit() -> None:
+    """
+    Record changes to the repository.
+    """
+    workspace = Workspace(pathname=os.getcwd())
+    click.echo(workspace.list_files())
+    
 
 
 if __name__ == "__main__":
