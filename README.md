@@ -21,11 +21,11 @@ Lit is a lightweight version control system (a literal [Git](https://git-scm.com
 3. Upgrade Lit
 
    ```bash
-   pipx upgrade git+https://github.com/RishikeshNK/lit.git
+   pipx upgrade lit
    ```
 
 4. Uninstall Lit
 
    ```bash
-   pipx uninstall git+https://github.com/RishikeshNK/lit.git
+   pipx uninstall lit
    ```
