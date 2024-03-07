@@ -26,8 +26,7 @@ def init(path: str) -> None:
 
         print(f"Initialized empty Lit repository in {repo_path}")
     except OSError as e:
-        print(f"fatal: {e}")
-        raise click.Abort()
+        print(f"{repo_path}: {e.strerror}")
 
 
 if __name__ == "__main__":
