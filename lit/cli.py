@@ -48,7 +48,8 @@ def commit() -> None:
     for file in workspace.list_files():
         data = workspace.read_file(file)
         blob = Blob(data=data)
-        click.echo(file)
+
+        database.store(blob)
 
 
 if __name__ == "__main__":
