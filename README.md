@@ -15,17 +15,17 @@ Lit is a lightweight version control system (a literal [Git](https://git-scm.com
 2. Install Lit
 
    ```bash
-   $ pipx install git+https://github.com/RishikeshNK/lit.git
+   pipx install git+https://github.com/RishikeshNK/lit.git
    ```
 
 3. Update Lit
 
    ```bash
-   $ pipx update git+https://github.com/RishikeshNK/lit.git
+   pipx update git+https://github.com/RishikeshNK/lit.git
    ```
 
 4. Uninstall Lit
 
    ```bash
-   $ pipx uninstall git+https://github.com/RishikeshNK/lit.git
+   pipx uninstall git+https://github.com/RishikeshNK/lit.git
    ```
