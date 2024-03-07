@@ -24,9 +24,9 @@ def init(path: str) -> None:
             dir_path = os.path.join(repo_path, directory)
             os.makedirs(dir_path, exist_ok=True)
 
-        print(f"Initialized empty Lit repository in {repo_path}")
+        click.echo(f"Initialized empty Lit repository in {repo_path}")
     except OSError as e:
-        print(f"{repo_path}: {e.strerror}")
+        click.echo(f"{repo_path}: {e.strerror}")
 
 
 if __name__ == "__main__":
