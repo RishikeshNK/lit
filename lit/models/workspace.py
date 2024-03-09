@@ -16,10 +16,10 @@ class Workspace(BaseModel):
         :return: List of files in the workspace.
         """
         return [
-            entry
-            for entry in os.listdir(self.pathname)
-            if os.path.isfile(os.path.join(self.pathname, entry))
-            and entry not in self.IGNORE
+            os.path.join(root, filename)
+            for root, _, filenames in os.walk(self.pathname)
+            for filename in filenames
+            if os.path.isfile(os.path.join(root, filename)) and filename not in self.IGNORE
         ]
 
     def read_file(self, file_name: str) -> str:

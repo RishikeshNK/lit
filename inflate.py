@@ -6,7 +6,7 @@ def inflate(data: Union[bytes, bytearray]) -> bytes:
     """
     Decompresses zlib-compressed data.
 
-    Usage: cat <path> | python3 main.py
+    Usage: cat <path> | python3 inflate.py
     """
     return zlib.decompress(data)
 

@@ -3,7 +3,6 @@ import os
 import random
 import string
 import zlib
-from typing import Union
 from lit.models.blob import Blob
 from pydantic import BaseModel
 
@@ -37,7 +36,7 @@ class Database(BaseModel):
         with open(temp_path, "wb") as file:
             compressed = zlib.compress(content, level=zlib.Z_BEST_SPEED)
             file.write(compressed)
-            
+
         os.rename(temp_path, object_path)
 
     def __generate_temp_name(self) -> str:
