@@ -3,22 +3,27 @@ import os
 import random
 import string
 import zlib
+from typing import Union
 from lit.models.blob import Blob
+from lit.models.tree import Tree
 from pydantic import BaseModel
+
+type LitObject = Union[Blob, Tree]
 
 
 class Database(BaseModel):
     pathname: str
 
-    def store(self, obj: Blob) -> None:
+    def store(self, obj: LitObject) -> None:
         """
-        Store a blob object in the database.
+        Store a object in the database.
 
-        :param obj: Blob object to store.
+        :param obj: Lit object to store.
         """
-        content = f"{obj.type} {len(obj.data)}\0{obj.data}".encode("utf-8")
-        oid = hashlib.sha1(content).hexdigest()
-        self.__write_object(oid, content)
+        content = f"{obj.type} {len(str(obj))}\0{str(obj)}".encode("utf-8")
+        obj.object_id = hashlib.sha1(content).hexdigest()
+
+        self.__write_object(obj.object_id, content)
 
     def __write_object(self, oid: str, content: bytes) -> None:
         """
