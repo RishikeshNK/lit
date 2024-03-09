@@ -33,9 +33,11 @@ class Database(BaseModel):
         temp_path = os.path.join(dirname, self.__generate_temp_name())
 
         os.makedirs(dirname, exist_ok=True)
+
         with open(temp_path, "wb") as file:
             compressed = zlib.compress(content, level=zlib.Z_BEST_SPEED)
             file.write(compressed)
+            
         os.rename(temp_path, object_path)
 
     def __generate_temp_name(self) -> str:
