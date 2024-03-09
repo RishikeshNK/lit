@@ -11,7 +11,7 @@ class Workspace(BaseModel):
 
     def list_files(self) -> List[str]:
         """
-        List files in the workspace, excluding ignored files/directories.
+        List files in the workspace, excluding ignored files/directories. Might have a cubic runtime complexity.
 
         :return: List of files in the workspace.
         """
@@ -19,16 +19,31 @@ class Workspace(BaseModel):
             os.path.join(root, filename)
             for root, _, filenames in os.walk(self.pathname)
             for filename in filenames
-            if os.path.isfile(os.path.join(root, filename)) and filename not in self.IGNORE
+            if not any(
+                ignore_dir in root.split(os.path.sep) for ignore_dir in self.IGNORE
+            )
         ]
 
-    def read_file(self, file_name: str) -> str:
+    def read_file(self, path: str, encoding: str = "utf-8") -> str:
         """
         Read the contents of a file in the workspace.
 
-        :param file_name: Name of the file to read.
+        :param path: Path of the file to read.
+        :param encoding: Encoding to use for reading the file (default is 'utf-8').
         :return: Contents of the file.
         """
-        file_path = os.path.join(self.pathname, file_name)
-        with open(file_path, "r") as file:
-            return file.read()
+        with open(path, "r", encoding=encoding) as file:
+            try:
+                return file.read()
+            except UnicodeDecodeError:
+                # Temporary fix till I figure out a better way to handle this!
+                alternative_encodings = ["latin-1", "utf-16", "iso-8859-1", "cp1252"]
+                for alt_encoding in alternative_encodings:
+                    try:
+                        with open(path, "r", encoding=alt_encoding) as alt_file:
+                            return alt_file.read()
+                    except UnicodeDecodeError:
+                        pass
+                raise UnicodeDecodeError(
+                    f"Unable to decode file '{path}' using any of the specified encodings."
+                )
